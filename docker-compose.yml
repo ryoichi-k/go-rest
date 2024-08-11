@@ -11,5 +11,7 @@ services:
     restart: always
     networks:
       - lesson
+    volumes:
+      - ./:/src
 networks:
   lesson:
