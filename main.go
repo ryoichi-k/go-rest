@@ -13,8 +13,11 @@ func main() {
 	db := db.NewDB()
 	// dbインスタンスをrepositoryのコンストラクタに渡す
 	userRepository := repository.NewUserRepository(db)
+	taskRepository := repository.NewTaskRepository(db)
 	userUsecase := usecase.NewUserUsecase(userRepository)
+	taskUsecase := usecase.NewTaskUsecase(taskRepository)
 	userController := controller.NewUserController(userUsecase)
-	e := router.NewRouter(userController)
+	taskController := controller.NewTaskController(taskUsecase)
+	e := router.NewRouter(userController, taskController)
 	e.Logger.Fatal(e.Start(":8080"))
 }
