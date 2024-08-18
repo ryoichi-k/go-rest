@@ -6,6 +6,8 @@ import (
 	"go-rest/repository"
 	"go-rest/router"
 	"go-rest/usecase"
+
+	"go-rest/validator"
 )
 
 // プログラムのエントリーポイント
@@ -14,8 +16,10 @@ func main() {
 	// dbインスタンスをrepositoryのコンストラクタに渡す
 	userRepository := repository.NewUserRepository(db)
 	taskRepository := repository.NewTaskRepository(db)
-	userUsecase := usecase.NewUserUsecase(userRepository)
-	taskUsecase := usecase.NewTaskUsecase(taskRepository)
+	taskValidator := validator.NewTaskValidator()
+	userValidator := validator.NewUserValidator()
+	taskUsecase := usecase.NewTaskUsecase(taskRepository, taskValidator)
+	userUsecase := usecase.NewUserUsecase(userRepository, userValidator)
 	userController := controller.NewUserController(userUsecase)
 	taskController := controller.NewTaskController(taskUsecase)
 	e := router.NewRouter(userController, taskController)
