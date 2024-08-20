@@ -18,6 +18,7 @@ func main() {
 	taskRepository := repository.NewTaskRepository(db)
 	taskValidator := validator.NewTaskValidator()
 	userValidator := validator.NewUserValidator()
+	//usecaseにvalidatorをdiする
 	taskUsecase := usecase.NewTaskUsecase(taskRepository, taskValidator)
 	userUsecase := usecase.NewUserUsecase(userRepository, userValidator)
 	userController := controller.NewUserController(userUsecase)
